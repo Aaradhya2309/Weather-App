@@ -1,23 +1,26 @@
 const apiKey = "ce85aa5b8da810424a5d87693443222b"; // Your OpenWeather API key
 
+// Function to fetch weather data for a given city
 function fetchWeather(city) {
- fetch(
-        "https://api.openweathermap.org/data/2.5/weather?q=&quot; + // API URL with city query parameter
+    fetch(
+        "https://api.openweathermap.org/data/2.5/weather?q=" + // API URL with city query parameter
         city + // The city passed to the function
         "&units=metric&appid=" + // Use metric units for temperature and add the API key
         apiKey
     )
-  .then(function(response) {
-   if (!response.ok) {
-     alert("No weather found.");
-     throw new Error("No weather found.");
- }
-   return response.json();
- })
-  .then(function(data) {
-   displayWeather(data);
- });
+    .then(function(response) {
+        // Check if the response is OK
+        if (!response.ok) {
+            alert("No weather found."); // Alert if no weather data is found
+            throw new Error("No weather found.");
+        }
+        return response.json(); // Convert response to JSON
+    })
+    .then(function(data) {
+        displayWeather(data); // Display the weather data
+    });
 }
+
 
 // Function to display the fetched weather data
 function displayWeather(data) {
@@ -58,21 +61,27 @@ function displayWeather(data) {
 }
 
 
+
+
+
+
+// Function to initiate a search for weather based on user input
 function search() {
-  const city = document.querySelector(".search-bar").value;
-  fetchWeather(city);
+    const city = document.querySelector(".search-bar").value; // Get the city name from input field
+    fetchWeather(city); // Fetch weather data for the entered city
 }
 
+// Add event listener for the search button to trigger search on click
 document.querySelector(".search button").addEventListener("click", function () {
-  search();
+    search(); // Call the search function on button click
 });
 
-document.querySelector(".search-bar").addEventListener("keyup",function(event) {
-  if (event.key == "Enter") {
-    //if(event.key === '' || event.code === 'Space')
-    search();
-  
-  }
+// Add event listener for the Enter key press to trigger search when "Enter" is pressed
+document.querySelector(".search-bar").addEventListener("keyup", function (event) {
+    if (event.key == "Enter") {
+        search(); // Call the search function when "Enter" key is pressed
+    }
 });
 
+// Fetch initial weather data for Siliguri
 fetchWeather("Siliguri");
